@@ -1,0 +1,39 @@
+server:
+    port: 8080
+    servlet:
+      encoding:
+        charset: UTF-8
+        force: true
+
+spring:
+  application:
+    name: SBB
+
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+
+  ####################################
+  # MySQL ??
+  ####################################
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/c_ban?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false
+    username: root
+    password: 1234
+
+  ####################################
+  # JPA ??
+  ####################################
+  jpa:
+    open-in-view: true      #
+    hibernate:
+      ddl-auto: create      # create, update, ...
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy # ?????? ?????? ??  myName <--> my_name
+    show-sql: true          # SQL ?? ??
+    properties:
+      hibernate:
+        format_sql: true    # SQL ??? ??
