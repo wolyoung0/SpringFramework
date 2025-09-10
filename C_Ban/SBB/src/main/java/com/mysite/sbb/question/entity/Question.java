@@ -13,7 +13,8 @@ import java.util.List;
 // 어노테이션을 통해 Getter, Setter, ToString, 생성자 등을 코드로 작성하는 것 대신 사용
 @Getter
 @Setter
-@ToString
+// 상호 참조로 인해 에러 발생해서 삭제
+//@ToString(exclude = )
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,7 +26,7 @@ public class Question {
     private Long id; // 아이디
 
     @Column(length = 200, nullable = false) // DB 컬럼 설정(문자열 길이 200, null 불가)
-    private String subjectName; // 주제
+    private String subject; // 주제
 
     @Column(columnDefinition = "TEXT") // DB 컬럼 정의(텍스트)
     private String content; // 내용
