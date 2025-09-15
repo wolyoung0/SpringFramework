@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"> <!-- th가 인식되지 않을 때 연결 -->
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <!-- <h1 th:text="${questionList}">질문 리스트 페이지</h1> -->
+    <h1>질문 리스트 페이지</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>제목</th>
+                <th>작성일</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="question : ${questionList}"> <!-- for each문과 동일, th가 있으면 타임리프 템플릿 사용 -->
+<!--                <td th:text="${question.subject}">제목1</td>-->
+                <td>
+                    <a th:href="@{/question/detail}" th:text="${question.subject}"></a> <!-- 데이터에 대한 변수 : $, 이동에 대한 변수: @ -->
+                </td>
+                <td th:text="${question.created}">날짜1</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

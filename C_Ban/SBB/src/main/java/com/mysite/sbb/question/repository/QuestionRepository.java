@@ -1,6 +1,7 @@
 package com.mysite.sbb.question.repository;
 
 import com.mysite.sbb.question.entity.Question;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

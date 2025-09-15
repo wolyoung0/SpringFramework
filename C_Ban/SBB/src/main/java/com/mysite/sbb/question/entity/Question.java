@@ -3,6 +3,8 @@ package com.mysite.sbb.question.entity;
 import com.mysite.sbb.answer.entity.Answer;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,10 +16,11 @@ import java.util.List;
 @Getter
 @Setter
 // 상호 참조로 인해 에러 발생해서 삭제
-//@ToString(exclude = )
+@ToString
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class) // 변경에 대한 부분 자동 패치
 public class Question {
 
     @Id // 테이블의 기본키
@@ -32,6 +35,7 @@ public class Question {
     private String content; // 내용
 
     // 가끔 LocalDateTime이 인식되지 않는 오류가 발생. jdk 24버전을 사용하면 된다는데 21 버전에서는 왜 안되는지는 검색해봐야됨.
+    @CreatedDate // 언제 만들었는지 자동 생성, SbbApplication에서 @EnableJpaAuditing 설정
     private LocalDateTime created; // 생성일
 
     // 참조되는 테이블에서 참조하는 테이블에 대한 설정 fetch는 검색해 봐야되고 mappedBy는 question 테이블 참조, 삭제 시 cascade 시킴.
