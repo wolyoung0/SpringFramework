@@ -18,7 +18,7 @@
             <tr th:each="question : ${questionList}"> <!-- for each문과 동일, th가 있으면 타임리프 템플릿 사용 -->
 <!--                <td th:text="${question.subject}">제목1</td>-->
                 <td>
-                    <a th:href="@{/question/detail}" th:text="${question.subject}"></a> <!-- 데이터에 대한 변수 : $, 이동에 대한 변수: @ -->
+                    <a th:href="@{|/question/detail/${question.id}|}" th:text="${question.subject}"></a> <!-- 데이터에 대한 변수 : $, 이동에 대한 변수: @, |를 이용하여 변수로 인식 -->
                 </td>
                 <td th:text="${question.created}">날짜1</td>
             </tr>

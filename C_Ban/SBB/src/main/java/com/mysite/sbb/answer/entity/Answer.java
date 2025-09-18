@@ -3,6 +3,8 @@ package com.mysite.sbb.answer.entity;
 import com.mysite.sbb.question.entity.Question;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
@@ -11,20 +13,22 @@ import java.time.LocalDateTime;
 // 어노테이션을 통해 Getter, Setter, ToString, 생성자 등을 코드로 작성하는 것 대신 사용
 @Getter
 @Setter
-@ToString
+//@ToString
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Answer {
     @Id // 테이블의 기본키
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // 이건 기억이 안난다. 검색해봐야 될 듯
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // 기본 키 생성을 db가 자동으로 1씩 증가시켜서 만들도록 설정.
     @Column(name = "answer_id") // DB 컬럼명
     private Long id; // 아이디
 
     @Column(columnDefinition = "TEXT") // DB 컬럼 정의(텍스트)
     private String content; // 내용
 
-    // 가끔 LocalDateTime이 인식되지 않는 오류가 발생. jdk 24버전을 사용하면 된다는데 21 버전에서는 왜 안되는지는 검색해봐야됨.
+    // @EnableJpaAuditing, @EntityListeners 설정하여 사용.
+    @CreatedDate
     private LocalDateTime created; // 생성일
 
     // 1대다 매핑을 위해 사용.

@@ -34,12 +34,14 @@ public class Question {
     @Column(columnDefinition = "TEXT") // DB 컬럼 정의(텍스트)
     private String content; // 내용
 
-    // 가끔 LocalDateTime이 인식되지 않는 오류가 발생. jdk 24버전을 사용하면 된다는데 21 버전에서는 왜 안되는지는 검색해봐야됨.
+    // @EnableJpaAuditing, @EntityListeners 설정하여 사용.
+    // 가끔 21버전에서만 인식이 안된다고 하셨는데 인터넷에선 설정 문제라고 함.
     @CreatedDate // 언제 만들었는지 자동 생성, SbbApplication에서 @EnableJpaAuditing 설정
     private LocalDateTime created; // 생성일
 
-    // 참조되는 테이블에서 참조하는 테이블에 대한 설정 fetch는 검색해 봐야되고 mappedBy는 question 테이블 참조, 삭제 시 cascade 시킴.
-    // cascade 타입은 여러개가 있다. 다른건 검색해봐야됨. ALL은 모든 것을 지원버림.
+    // 참조되는 테이블에서 참조하는 테이블에 대한 설정. mappedBy는 question 테이블 참조
+    // fetch: 참조하는 데이터를 언제 읽어올지 설정. LAZY: 엔티티를 사용하는 시점에 쿼리 실행(권장)
+    // 상태 변화 시 cascade를 위한 설정. cascade 타입은 여러개 존재. ALL: 모든 상태 변화 실행.
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "question", cascade = CascadeType.ALL)
     private List<Answer> answerList;
 }
