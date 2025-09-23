@@ -1,5 +1,6 @@
 package com.mysite.sbb.question.service;
 
+import com.mysite.sbb.question.dto.QuestionDto;
 import com.mysite.sbb.question.entity.Question;
 import com.mysite.sbb.question.repository.QuestionRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -25,5 +26,13 @@ public class QuestionService {
     public Question getQuestion(Long id) {
         return questionRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("해당 질문이 X"));
+    }
+
+    public void createQuestion(QuestionDto questionDto) {
+        Question question = Question.builder()
+                .content(questionDto.getContent())
+                .subject(questionDto.getSubject())
+                .build();
+        questionRepository.save(question);
     }
 }

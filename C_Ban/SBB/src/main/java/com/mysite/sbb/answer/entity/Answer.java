@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 // 어노테이션을 통해 Getter, Setter, ToString, 생성자 등을 코드로 작성하는 것 대신 사용
 @Getter
 @Setter
-//@ToString
+//@ToString(exclude = "")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

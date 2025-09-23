@@ -30,7 +30,7 @@ spring:
   jpa:
     open-in-view: true      #
     hibernate:
-      ddl-auto: update      # create, update, ... / create   : 실행할 때마다 새로 생성, update : 정보 유지
+      ddl-auto: update      # create, update, ... /  create : 실행할 때마다 새로 생성, update : 정보 유지
       naming:
         physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy # ?????? ?????? ??  myName <--> my_name
     show-sql: true          # SQL ?? ??

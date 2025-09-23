@@ -1,5 +1,6 @@
 package com.mysite.sbb.question.controller;
 
+import com.mysite.sbb.question.dto.QuestionDto;
 import com.mysite.sbb.question.entity.Question;
 import com.mysite.sbb.question.repository.QuestionRepository;
 import com.mysite.sbb.question.service.QuestionService;
@@ -8,10 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -37,5 +35,17 @@ public class QuestionController {
         log.info("==========> question : " + question); // 로그 찍는 용도로 사용. error, degug, info 등
         model.addAttribute("question", question);
         return "question/detail";
+    }
+
+    @GetMapping("/create")
+    public String inputForm() {
+        return "question/inputForm";
+    }
+
+    @PostMapping("/create")
+    public String createQuestion (QuestionDto questionDto) {
+        log.info("==========> {}", questionDto);
+        questionService.createQuestion(questionDto);
+        return "redirect:/question/list";
     }
 }

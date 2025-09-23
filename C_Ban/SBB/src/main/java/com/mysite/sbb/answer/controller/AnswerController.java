@@ -23,8 +23,8 @@ public class AnswerController {
     @PostMapping("/create/{id}")
     public String create(@PathVariable("id") Long id, @RequestParam("content") String content) {
         log.info("==========> {}, {}", id, content);
-        Question question = questionService.getQuestion(id);
-        answerService.create(question, content);
+        Question question = questionService.getQuestion(id); // 외래키 정보를 가져옴.
+        answerService.create(question, content); // 실제 answer가 생성됨.
         return "redirect:/question/detail/" + id; // 이 주소로 되돌아 옴.
     }
 }
