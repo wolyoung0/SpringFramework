@@ -1,2 +1,2 @@
 # SpringFramework
-SpringFramework Study for inhatc class
+SpringFramework Study
