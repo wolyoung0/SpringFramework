@@ -5,6 +5,9 @@ import com.mysite.sbb.question.entity.Question;
 import com.mysite.sbb.question.repository.QuestionRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +22,17 @@ public class QuestionService {
     // 4. RequiredArgsConstructor 사용 (최신 방법)
     private final QuestionRepository questionRepository; // final을 붙임으로서 값 입력없이 자동 객체 생성
 
+    public Page<Question> getList(int page) {
+
+        Pageable pageable = PageRequest.of(page, 10);
+        Page<Question> paging = questionRepository.findAll(pageable);
+
+        return paging;
+    }
+
     public List<Question> getList() {
+
+//        Pageable pageable = PageRequest.of(page, 10);
         return questionRepository.findAll();
     }
 

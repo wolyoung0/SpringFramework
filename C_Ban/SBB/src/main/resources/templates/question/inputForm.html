@@ -4,18 +4,25 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+    <style>
+        .fieldError {
+            color: #bd2130;
+        }
+    </style>
 </head>
 <body>
     <div class="container my-3">
         <h1>질문 등록</h1>
-        <form th:action="@{/question/create}" method="post">
+        <form th:action="@{/question/create}" method="post" th:object="${questionDto}"> <!-- th:object가 뭐였는지 확인하기 -->
             <div class="mb-3">
                 <label for="subject" class="form-label"><b>제목</b></label>
-                <input type="text" class="form-control" id="subject" name="subject" placeholder="제목을 입력하세요">
+                <input type="text" class="form-control" id="subject" name="subject" placeholder="제목을 입력하세요" th:field="*{subject}"> <!-- *는 field 가져올 때 사용 -->
+                <p th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}" class="fieldError">Error</p>
             </div>
             <div class="mb-3">
                 <label for="content" class="form-label"><b>내용</b></label>
-                <textarea class="form-control" id="content" name="content" rows="10" placeholder="내용을 입력하세요"></textarea>
+                <textarea class="form-control" id="content" name="content" rows="10" placeholder="내용을 입력하세요" th:field="*{content}"></textarea>
+                <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="fieldError">Error</p>
             </div>
             <button type="submit" class="btn btn-primary">저장하기</button>
         </form>

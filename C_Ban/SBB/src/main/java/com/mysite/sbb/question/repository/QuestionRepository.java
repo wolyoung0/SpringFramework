@@ -2,6 +2,8 @@ package com.mysite.sbb.question.repository;
 
 import com.mysite.sbb.question.entity.Question;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -19,4 +21,6 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     List<Question> abcd(Long id, String keyword);
 
     // command + shift + T로 Junit 테스트 생성가능
+
+    Page<Question> findAll(Pageable pageable); // 리스트가 아닌 페이지로 들고 옴
 }
