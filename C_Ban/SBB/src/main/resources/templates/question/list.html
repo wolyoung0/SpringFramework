@@ -21,6 +21,7 @@
                 <td th:text="${paging.getTotalElements - loop.index - (paging.number * paging.size)}"></td>
                 <td>
                     <a th:href="@{|/question/detail/${question.id}|}" th:text="${question.subject}"></a> <!-- 데이터에 대한 변수 : $, 이동에 대한 변수: @, |를 이용하여 변수로 인식 -->
+                    <span class="badge bg-primary" th:if="${#lists.size(question.answerList) > 0}" th:text="${#lists.size(question.answerList)}"></span>
                 </td>
                 <td th:text="${#temporals.format(question.created, 'yyyy-MM-dd HH:mm:ss')}">날짜1</td>
             </tr>

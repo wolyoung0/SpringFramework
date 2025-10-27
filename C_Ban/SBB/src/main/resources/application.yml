@@ -37,3 +37,9 @@ spring:
     properties:
       hibernate:
         format_sql: true    # SQL 포맷팅 여부
+
+  security:
+    user:
+      name: test
+      password: 1111
+      roles: USER
