@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+    <style>
+        .fieldError {
+            color: #bd2130;
+        }
+    </style>
+</head>
+<body>
+    <div class="container my-3">
+        <h1>설문 등록</h1>
+        <form th:action="@{/toolSurvey/create}" method="post" th:object="${toolSurveyDto}">
+            <div class="mb-3">
+                <label for="nickname" class="form-label"><b>닉네임</b></label>
+                <input type="text" class="form-control" id="nickname" name="nickname" placeholder="닉네임을 입력하세요" th:field="*{nickname}"> <!-- *는 field 가져올 때 사용 -->
+                <p th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}" class="fieldError">Error</p>
+            </div>
+            <div class="mb-3">
+                <label for="preferredTool" class="form-label"><b>선호 개발 도구</b></label>
+                <select class="form-control" id="preferredTool" name="preferredTool" placeholder="도구를 선택하세요" th:field="*{preferredTool}">
+                    <option value="VS_CODE">VS_CODE</option>
+                    <option value="INTELLIJ">INTELLIJ</option>
+                    <option value="PYCHARM">PYCHARM</option>
+                    <option value="ETC">ETC</option>
+                </select>
+                <p th:if="${#fields.hasErrors('preferredTool')}" th:errors="*{preferredTool}" class="fieldError">Error</p>
+            </div>
+            <div class="mb-3">
+    <!--            <label for="teamMode" class="form-label"><b>팀 프로젝트 방식</b></label>-->
+                <input type="radio" id="teamMode1" name="teamMode" placeholder="팀 방식을 입력하세요" value="OFFLINE" th:field="*{teamMode}"> <!-- *는 field 가져올 때 사용 -->
+                <label for="teamMode1">OFFLINE</label></br>
+                <input type="radio" id="teamMode2" name="teamMode" placeholder="팀 방식을 입력하세요" value="ONLINE" th:field="*{teamMode}">
+                <label for="teamMode2">ONLINE</label></br>
+                <input type="radio" id="teamMode3" name="teamMode" placeholder="팀 방식을 입력하세요" value="HYBRID" th:field="*{teamMode}">
+                <label for="teamMode3">HYBRID</label></br>
+                <p th:if="${#fields.hasErrors('teamMode')}" th:errors="*{teamMode}" class="fieldError">Error</p>
+            </div>
+            <div class="mb-3">
+                <label for="experience" class="form-label"><b>경험 수준</b></label>
+                <select class="form-control" id="experience" name="experience" placeholder="도구를 선택하세요" th:field="*{experience}">
+                    <option value="NEWBIE">NEWBIE</option>
+                    <option value="JUNIOR">JUNIOR</option>
+                    <option value="MID">MID</option>
+                </select>
+                <p th:if="${#fields.hasErrors('experience')}" th:errors="*{experience}" class="fieldError">Error</p>
+            </div>
+            <div class="mb-3">
+                <label for="note" class="form-label"><b>비고</b></label>
+                <textarea class="form-control" id="note" name="note" rows="10" placeholder="비고를 입력하세요" th:field="*{note}"></textarea>
+                <p th:if="${#fields.hasErrors('note')}" th:errors="*{note}" class="fieldError">Error</p>
+            </div>
+            <button type="submit" class="btn btn-primary">저장하기</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -39,13 +39,13 @@ public class QuestionController {
         Question question = questionService.getQuestion(id);
         log.info("==========> question : " + question); // 로그 찍는 용도로 사용. error, degug, info 등
         model.addAttribute("question", question);
+        model.addAttribute("answerDto", new AnswerDto());
         return "question/detail";
     }
 
     @GetMapping("/create")
     public String inputForm(QuestionDto questionDto, Model model) {
-        model.addAttribute("questionDto", questionDto);
-        model.addAttribute("answerDto", new AnswerDto());
+        model.addAttribute("questionDto", questionDto); // inputForm.html에서 th:object="${questionDto}"이 뭔지 알려주기 위함.
         return "question/inputForm";
     }
 

@@ -1,8 +1,8 @@
 server:
-    port: 8080
+    port: 8080 # 실행 포트 설정
     servlet:
       encoding:
-        charset: UTF-8
+        charset: UTF-8 # UTF-8로 맞추지 않으면 한글을 쓸 때 깨질 수 있음.
         force: true
 
 spring:
@@ -11,12 +11,12 @@ spring:
 
   devtools:
     livereload:
-      enabled: true
+      enabled: true # 브라우저 자동 갱신
     restart:
-      enabled: true # 자동 리로딩
+      enabled: true # 자동 재시작
 
   ####################################
-  # MySQL ??
+  # MySQL 설정
   ####################################
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -25,15 +25,15 @@ spring:
     password: root1234
 
   ####################################
-  # JPA ??
+  # JPA 설정
   ####################################
   jpa:
     open-in-view: true      #
     hibernate:
       ddl-auto: update      # create, update, ... /  create : 실행할 때마다 새로 생성, update : 정보 유지
       naming:
-        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy # ?????? ?????? ??  myName <--> my_name
-    show-sql: true          # SQL ?? ??
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy # 카멜케이스를 언더스코어로 변환  myName <--> my_name
+    show-sql: true          # SQL 설정 여부, 이것만 설정하면 한 줄로 보임. 포맷팅을 통해 가독성을 높임.
     properties:
       hibernate:
-        format_sql: true    # SQL ??? ??
+        format_sql: true    # SQL 포맷팅 여부
