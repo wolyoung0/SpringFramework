@@ -1,5 +1,7 @@
 package com.mysite.sbb.answer.entity;
 
+import com.mysite.sbb.audit.BaseEntity;
+import com.mysite.sbb.member.entity.Member;
 import com.mysite.sbb.question.entity.Question;
 import jakarta.persistence.*;
 import lombok.*;
@@ -17,8 +19,8 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
-public class Answer {
+//@EntityListeners(AuditingEntityListener.class)
+public class Answer extends BaseEntity {
     @Id // 테이블의 기본키
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 기본 키 생성을 db가 자동으로 1씩 증가시켜서 만들도록 설정.
     @Column(name = "answer_id") // DB 컬럼명
@@ -28,8 +30,8 @@ public class Answer {
     private String content; // 내용
 
     // @EnableJpaAuditing, @EntityListeners 설정하여 사용.
-    @CreatedDate
-    private LocalDateTime created; // 생성일
+//    @CreatedDate
+//    private LocalDateTime created; // 생성일
 
     // 1대다 매핑을 위해 사용.
     // 참조하는 클래스가 ManyToOne 참조되는 클래스가 OneToMany
@@ -37,4 +39,8 @@ public class Answer {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id", nullable = false) // join할 떄 사용. name을 통해 외래키 설정. null 값 비허용 설정
     private Question question;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id", nullable = false)
+    private Member author;
 }

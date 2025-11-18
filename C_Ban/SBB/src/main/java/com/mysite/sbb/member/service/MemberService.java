@@ -3,6 +3,7 @@ package com.mysite.sbb.member.service;
 import com.mysite.sbb.member.dto.MemberDto;
 import com.mysite.sbb.member.entity.Member;
 import com.mysite.sbb.member.repository.MemberRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,5 +28,11 @@ public class MemberService {
                 .build();
 
         memberRepository.save(member);
+    }
+
+    public Member getMember(String name) {
+        Member member = memberRepository.findByUsername(name)
+                .orElseThrow(() -> new EntityNotFoundException("해당 사용자가 존재하지 않습니다." + name));
+        return member;
     }
 }

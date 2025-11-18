@@ -43,3 +43,14 @@ spring:
       name: test
       password: 1111
       roles: USER
+
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace
+        orm:
+          jdbc:
+            bind: trace

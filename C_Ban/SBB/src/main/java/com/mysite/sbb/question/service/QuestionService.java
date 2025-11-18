@@ -1,5 +1,6 @@
 package com.mysite.sbb.question.service;
 
+import com.mysite.sbb.member.entity.Member;
 import com.mysite.sbb.question.dto.QuestionDto;
 import com.mysite.sbb.question.entity.Question;
 import com.mysite.sbb.question.repository.QuestionRepository;
@@ -45,10 +46,11 @@ public class QuestionService {
                 .orElseThrow(() -> new EntityNotFoundException("해당 질문이 X"));
     }
 
-    public void createQuestion(QuestionDto questionDto) {
+    public void createQuestion(QuestionDto questionDto, Member member) {
         Question question = Question.builder()
                 .content(questionDto.getContent())
                 .subject(questionDto.getSubject())
+                .author(member)
                 .build();
         questionRepository.save(question);
     }

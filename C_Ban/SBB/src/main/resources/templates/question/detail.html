@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/layout}">
 
 <div layout:fragment="content" class="container my-3">
@@ -10,8 +11,26 @@
             <div class="card-text" th:text="${question.content}"></div>
             <div class="d-flex justify-content-end">
                 <div class="badge bg-danger p-2 text-start mx-3">
+                    <div class="mb-2">
+                        <span th:text="${question.author.username}"></span>
+                    </div>
                     <div th:text="${#temporals.format(question.created, 'yyyy-MM-dd HH:mm')}"></div>
                 </div>
+            </div>
+            <!-- 수정, 삭제 버튼 추가 -->
+            <div>
+                <a href="#"
+                   class="btn btn-sm btn-outline-primary"
+                   sec:authorize="isAuthenticated()"
+                   th:if="${question.author != null and #authentication.getPrincipal().getUsername() == question.author.username}"
+                >수정
+                </a>
+                <a href="#"
+                   class="btn btn-sm btn-outline-danger"
+                   sec:authorize="isAuthenticated()"
+                   th:if="${question.author != null and #authentication.getPrincipal().getUsername() == question.author.username}"
+                >삭제
+                </a>
             </div>
         </div>
     </div>
@@ -19,12 +38,30 @@
     <h5 class="border-bottom my-3 py-2" th:text="|${#lists.size(question.answerList)}개의 답변이 있습니다.|"></h5> <!-- # : html이 가지고 있는 함수 사용 -->
 
     <div class="card my-3" th:each="answer : ${question.answerList}">
-        <div class="card-body">
+        <div class="card-body bg-success-subtle">
             <div class="card-text" th:text="${answer.content}"></div>
             <div class="d-flex justify-content-end">
-                <div class="badge bg-light text-dark p-2 text-start mx-3">
+                <div class="badge bg-success text-white p-2 text-start mx-3">
+                    <div class="mb-2">
+                        <span th:text="${question.author.username}"></span>
+                    </div>
                     <div th:text="${#temporals.format(answer.created, 'yyyy-MM-dd HH:mm')}"></div>
                 </div>
+            </div>
+            <!-- 수정, 삭제 버튼 추가 -->
+            <div>
+                <a href="#"
+                   class="btn btn-sm btn-outline-primary"
+                   sec:authorize="isAuthenticated()"
+                   th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}"
+                >수정
+                </a>
+                <a href="#"
+                   class="btn btn-sm btn-outline-danger"
+                   sec:authorize="isAuthenticated()"
+                   th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}"
+                >삭제
+                </a>
             </div>
         </div>
     </div>
@@ -35,7 +72,8 @@
     <!--            </ul>-->
     <!--        </div>-->
     <form th:object="${answerDto}" class="my-3" th:action="@{|/answer/create/${question.id}|}" method="post">
-        <textarea th:field="*{content}" class="form-control" id="content" name="content" rows="7"></textarea>
+        <textarea sec:authorize="isAnonymous()" disabled th:field="*{content}" class="form-control" id="content" name="content" rows="7"></textarea>
+        <textarea sec:authorize="isAuthenticated()" th:field="*{content}" class="form-control" id="content" name="content" rows="7"></textarea>
         <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="fieldError">Error</p>
         <input class="btn btn-primary my-3" type="submit" value="답변 등록">
     </form>

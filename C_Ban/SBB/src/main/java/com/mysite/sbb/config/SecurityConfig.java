@@ -36,7 +36,7 @@ public class SecurityConfig {
                 .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
                 .requestMatchers("/").permitAll()
                 .requestMatchers("/member/**").permitAll()
-//                .requestMatchers("/question/**").permitAll()
+                .requestMatchers("/question/**").permitAll()
                 .anyRequest().authenticated()); // 그 외의 request는 인증이 되고 사용하도록
 
         return http.build();
