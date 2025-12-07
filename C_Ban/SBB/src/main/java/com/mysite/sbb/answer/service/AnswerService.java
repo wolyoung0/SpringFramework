@@ -5,6 +5,8 @@ import com.mysite.sbb.answer.entity.Answer;
 import com.mysite.sbb.answer.repository.AnswerRepository;
 import com.mysite.sbb.member.entity.Member;
 import com.mysite.sbb.question.entity.Question;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,5 +26,20 @@ public class AnswerService {
                 .build();
         Answer save = answerRepository.save(answer);
         log.info("==========> " + save);
+    }
+
+    public Answer getAnswer(Long id) {
+        Answer answer = answerRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("해당 응답을 찾을 수 없습니다."));
+        return answer;
+    }
+
+    public void modify(Answer answer, @Valid AnswerDto answerDto) {
+        answer.setContent(answerDto.getContent());
+        answerRepository.save(answer);
+    }
+
+    public void delete(Answer answer) {
+        answerRepository.delete(answer);
     }
 }

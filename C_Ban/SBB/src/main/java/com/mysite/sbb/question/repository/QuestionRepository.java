@@ -4,8 +4,10 @@ import com.mysite.sbb.question.entity.Question;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,4 +25,22 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     // command + shift + T로 Junit 테스트 생성가능
 
     Page<Question> findAll(Pageable pageable); // 리스트가 아닌 페이지로 들고 옴
+
+    Page<Question> findAll(Specification<Question> specification, Pageable pageable);
+
+    // jpql 방식
+    @Query(value =
+        "SELECT distinct q "
+        + "FROM Question q "
+        + "LEFT OUTER JOIN Member m1 ON q.author = m1 "
+        + "LEFT OUTER JOIN Answer a ON a.question = q "
+        + "LEFT OUTER JOIN Member m2 ON a.author = m2 "
+        + "WHERE q.subject LIKE %:keyword% " // 가져온 변수로 인식시키기 위해 @Param, ':' 사용
+        + "OR q.content LIKE %:keyword% "
+        + "OR m1.username LIKE %:keyword% "
+        + "OR a.content LIKE %:keyword% "
+        + "OR m2.username LIKE %:keyword% "
+        , nativeQuery = false
+    )
+    Page<Question> findAllByKeyword(@Param("keyword") String keyword, Pageable pageable);
 }

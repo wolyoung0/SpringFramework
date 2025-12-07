@@ -17,16 +17,17 @@
                     <div th:text="${#temporals.format(question.created, 'yyyy-MM-dd HH:mm')}"></div>
                 </div>
             </div>
-            <!-- 수정, 삭제 버튼 추가 -->
+            <!-- 수정, 삭제 버튼 추가 /question/modify/1 -->
             <div>
-                <a href="#"
+                <a th:href="@{|/question/modify/${question.id}|}"
                    class="btn btn-sm btn-outline-primary"
                    sec:authorize="isAuthenticated()"
                    th:if="${question.author != null and #authentication.getPrincipal().getUsername() == question.author.username}"
                 >수정
                 </a>
-                <a href="#"
-                   class="btn btn-sm btn-outline-danger"
+                <a href="javascript:void(0)"
+                   th:data-uri="@{|/question/delete/${question.id}|}"
+                   class="delete btn btn-sm btn-outline-danger"
                    sec:authorize="isAuthenticated()"
                    th:if="${question.author != null and #authentication.getPrincipal().getUsername() == question.author.username}"
                 >삭제
@@ -43,21 +44,22 @@
             <div class="d-flex justify-content-end">
                 <div class="badge bg-success text-white p-2 text-start mx-3">
                     <div class="mb-2">
-                        <span th:text="${question.author.username}"></span>
+                        <span th:text="${answer.author.username}"></span>
                     </div>
                     <div th:text="${#temporals.format(answer.created, 'yyyy-MM-dd HH:mm')}"></div>
                 </div>
             </div>
             <!-- 수정, 삭제 버튼 추가 -->
             <div>
-                <a href="#"
+                <a th:href="@{|/answer/modify/${answer.id}|}"
                    class="btn btn-sm btn-outline-primary"
                    sec:authorize="isAuthenticated()"
                    th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}"
                 >수정
                 </a>
-                <a href="#"
-                   class="btn btn-sm btn-outline-danger"
+                <a href="javascript:void(0)"
+                   th:data-uri="@{|/answer/delete/${answer.id}|}"
+                   class="delete btn btn-sm btn-outline-danger"
                    sec:authorize="isAuthenticated()"
                    th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}"
                 >삭제
@@ -78,4 +80,16 @@
         <input class="btn btn-primary my-3" type="submit" value="답변 등록">
     </form>
 </div>
+<th:block layout:fragment="script">
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.delete').click(function() {
+                if(confirm('정말 삭제할까요?')) {
+                    const uri = $(this).data('uri');
+                    window.location.href = uri;
+                }
+            })
+        })
+    </script>
+</th:block>
 </html>
